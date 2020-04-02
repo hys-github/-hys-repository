@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.hys.project</groupId>
+	<artifactId>crowdfunding07-member-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- 导入 SpringCloud 需要使用的依赖信息 -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Greenwich.SR2</version>
+				<type>pom</type>
+				<!-- import 依赖范围表示将 spring-cloud-dependencies 包中的依赖信息导入 -->
+				<scope>import</scope>
+			</dependency>
+			<!-- 导入 SpringBoot 需要使用的依赖信息 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>2.1.6.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>2.1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>1.1.6</version>
+			</dependency>
+
+			<!-- lombok的作用：在实体类上加上几个相应注解，可直接得到get/set方法，构造函数 简化开发 -->
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.18</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>springloaded</artifactId>
+		</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+
+
+
+
+
+
+	<modules>
+		<!-- 注册中心 -->
+		<module>crowdfunding08-member-eureka</module>
+		<!-- 实体类模块 -->
+		<module>crowdfunding09-member-entity</module>
+		<!-- mysql数据服务 -->
+		<module>crowdfunding10-member-mysql-provider</module>
+		<!-- redis数据服务 -->
+		<module>crowdfunding11-member-redis-provider</module>
+		<!-- 会员中心 -->
+		<module>crowdfunding12-member-authentication-consumer</module>
+		<!-- 项目维护 -->
+		<module>crowdfunding13-member-project-consumer</module>
+		<!-- 订单维护 -->
+		<module>crowdfunding14-member-order-consumer</module>
+		<!-- 支付功能 -->
+		<module>crowdfunding15-member-pay-consumer</module>
+		<!-- 网关 -->
+		<module>crowdfunding16-member-zuul</module>
+		<!-- api模块 -->
+		<module>crowdfunding17-member-api</module>
+	</modules>
+</project>

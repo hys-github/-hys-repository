@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hys.project.mapper.ReturnPOMapper" >
+  <resultMap id="BaseResultMap" type="com.hys.project.entity.po.ReturnPO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="project_id" property="projectId" jdbcType="INTEGER" />
+    <result column="return_type" property="returnType" jdbcType="INTEGER" />
+    <result column="support_money" property="supportMoney" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="return_count" property="returnCount" jdbcType="INTEGER" />
+    <result column="signal_purchase" property="signalPurchase" jdbcType="INTEGER" />
+    <result column="purchase" property="purchase" jdbcType="INTEGER" />
+    <result column="freight" property="freight" jdbcType="INTEGER" />
+    <result column="invoice" property="invoice" jdbcType="INTEGER" />
+    <result column="return_date" property="returnDate" jdbcType="INTEGER" />
+    <result column="describ_pic_path" property="describPicPath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, project_id, return_type, support_money, content, return_count, signal_purchase, 
+    purchase, freight, invoice, return_date, describ_pic_path
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hys.project.entity.po.ReturnPOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_return
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_return
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_return
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hys.project.entity.po.ReturnPOExample" >
+    delete from t_return
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hys.project.entity.po.ReturnPO" >
+    insert into t_return (id, project_id, return_type, 
+      support_money, content, return_count, 
+      signal_purchase, purchase, freight, 
+      invoice, return_date, describ_pic_path
+      )
+    values (#{id,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{returnType,jdbcType=INTEGER}, 
+      #{supportMoney,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{returnCount,jdbcType=INTEGER}, 
+      #{signalPurchase,jdbcType=INTEGER}, #{purchase,jdbcType=INTEGER}, #{freight,jdbcType=INTEGER}, 
+      #{invoice,jdbcType=INTEGER}, #{returnDate,jdbcType=INTEGER}, #{describPicPath,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hys.project.entity.po.ReturnPO" >
+    insert into t_return
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="projectId != null" >
+        project_id,
+      </if>
+      <if test="returnType != null" >
+        return_type,
+      </if>
+      <if test="supportMoney != null" >
+        support_money,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="returnCount != null" >
+        return_count,
+      </if>
+      <if test="signalPurchase != null" >
+        signal_purchase,
+      </if>
+      <if test="purchase != null" >
+        purchase,
+      </if>
+      <if test="freight != null" >
+        freight,
+      </if>
+      <if test="invoice != null" >
+        invoice,
+      </if>
+      <if test="returnDate != null" >
+        return_date,
+      </if>
+      <if test="describPicPath != null" >
+        describ_pic_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="returnType != null" >
+        #{returnType,jdbcType=INTEGER},
+      </if>
+      <if test="supportMoney != null" >
+        #{supportMoney,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="returnCount != null" >
+        #{returnCount,jdbcType=INTEGER},
+      </if>
+      <if test="signalPurchase != null" >
+        #{signalPurchase,jdbcType=INTEGER},
+      </if>
+      <if test="purchase != null" >
+        #{purchase,jdbcType=INTEGER},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=INTEGER},
+      </if>
+      <if test="invoice != null" >
+        #{invoice,jdbcType=INTEGER},
+      </if>
+      <if test="returnDate != null" >
+        #{returnDate,jdbcType=INTEGER},
+      </if>
+      <if test="describPicPath != null" >
+        #{describPicPath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hys.project.entity.po.ReturnPOExample" resultType="java.lang.Integer" >
+    select count(*) from t_return
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_return
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectId != null" >
+        project_id = #{record.projectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.returnType != null" >
+        return_type = #{record.returnType,jdbcType=INTEGER},
+      </if>
+      <if test="record.supportMoney != null" >
+        support_money = #{record.supportMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnCount != null" >
+        return_count = #{record.returnCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.signalPurchase != null" >
+        signal_purchase = #{record.signalPurchase,jdbcType=INTEGER},
+      </if>
+      <if test="record.purchase != null" >
+        purchase = #{record.purchase,jdbcType=INTEGER},
+      </if>
+      <if test="record.freight != null" >
+        freight = #{record.freight,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoice != null" >
+        invoice = #{record.invoice,jdbcType=INTEGER},
+      </if>
+      <if test="record.returnDate != null" >
+        return_date = #{record.returnDate,jdbcType=INTEGER},
+      </if>
+      <if test="record.describPicPath != null" >
+        describ_pic_path = #{record.describPicPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_return
+    set id = #{record.id,jdbcType=INTEGER},
+      project_id = #{record.projectId,jdbcType=INTEGER},
+      return_type = #{record.returnType,jdbcType=INTEGER},
+      support_money = #{record.supportMoney,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      return_count = #{record.returnCount,jdbcType=INTEGER},
+      signal_purchase = #{record.signalPurchase,jdbcType=INTEGER},
+      purchase = #{record.purchase,jdbcType=INTEGER},
+      freight = #{record.freight,jdbcType=INTEGER},
+      invoice = #{record.invoice,jdbcType=INTEGER},
+      return_date = #{record.returnDate,jdbcType=INTEGER},
+      describ_pic_path = #{record.describPicPath,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hys.project.entity.po.ReturnPO" >
+    update t_return
+    <set >
+      <if test="projectId != null" >
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="returnType != null" >
+        return_type = #{returnType,jdbcType=INTEGER},
+      </if>
+      <if test="supportMoney != null" >
+        support_money = #{supportMoney,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="returnCount != null" >
+        return_count = #{returnCount,jdbcType=INTEGER},
+      </if>
+      <if test="signalPurchase != null" >
+        signal_purchase = #{signalPurchase,jdbcType=INTEGER},
+      </if>
+      <if test="purchase != null" >
+        purchase = #{purchase,jdbcType=INTEGER},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=INTEGER},
+      </if>
+      <if test="invoice != null" >
+        invoice = #{invoice,jdbcType=INTEGER},
+      </if>
+      <if test="returnDate != null" >
+        return_date = #{returnDate,jdbcType=INTEGER},
+      </if>
+      <if test="describPicPath != null" >
+        describ_pic_path = #{describPicPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hys.project.entity.po.ReturnPO" >
+    update t_return
+    set project_id = #{projectId,jdbcType=INTEGER},
+      return_type = #{returnType,jdbcType=INTEGER},
+      support_money = #{supportMoney,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      return_count = #{returnCount,jdbcType=INTEGER},
+      signal_purchase = #{signalPurchase,jdbcType=INTEGER},
+      purchase = #{purchase,jdbcType=INTEGER},
+      freight = #{freight,jdbcType=INTEGER},
+      invoice = #{invoice,jdbcType=INTEGER},
+      return_date = #{returnDate,jdbcType=INTEGER},
+      describ_pic_path = #{describPicPath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 
+  
+  		自定义的sql语句
+  
+   -->
+  
+  <!-- 将回报信息批量插入到数据库中 -->
+  <insert id="insertReturnPOList">
+  	insert into t_return(project_id,
+  						 return_type,
+  						 support_money,
+  						 content,
+  						 return_count,
+  						 signal_purchase,
+  						 purchase,
+  						 freight,
+  						 invoice,
+  						 return_date,
+  						 describ_pic_path
+  						 ) values
+  						 <foreach collection="returnPOList" item="returnPO" separator=",">
+  						 	(
+  						 	#{returnPO.projectId},
+  						 	#{returnPO.returnType},
+  						 	#{returnPO.supportMoney},
+  						 	#{returnPO.content},
+  						 	#{returnPO.returnCount},
+  						 	#{returnPO.signalPurchase},
+  						 	#{returnPO.purchase},
+  						 	#{returnPO.freight},
+  						 	#{returnPO.invoice},
+  						 	#{returnPO.returnDate},
+  						 	#{returnPO.describPicPath}
+  						 	)
+  						 </foreach>
+  </insert>
+  
+  
+</mapper>

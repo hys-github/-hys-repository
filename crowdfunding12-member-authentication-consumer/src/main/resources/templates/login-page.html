@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="keys" content="">
+<meta name="author" content="">
+
+<base th:href="@{/}" />
+
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/login.css">
+<style>
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<div>
+					<a class="navbar-brand" href="index.html" style="font-size: 32px;">尚筹网-创意产品众筹平台</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+
+		<form action="to/auth/main/page" method="post" class="form-signin"
+			role="form">
+			<h2 class="form-signin-heading">
+				<i class="glyphicon glyphicon-log-in"></i> 用户登录
+			</h2>
+			<p style="color: red;" th:text="${message}">这里显示登录失败的提示消息（在同一服务器上）</p>
+			<p style="color: red;" th:text="${session.message}">这里显示访问服务器时没有经过认证时显示的异常信息（跨服务器，不同的服务器）</p>
+			<div class="form-group has-success has-feedback">
+				<input type="text" name="loginAcct" class="form-control"
+					id="inputSuccess4" placeholder="请输入登录账号" autofocus> <span
+					class="glyphicon glyphicon-user form-control-feedback"></span>
+			</div>
+			<div class="form-group has-success has-feedback">
+				<input type="text" name="userPswd" class="form-control"
+					id="inputSuccess4" placeholder="请输入登录密码" style="margin-top: 10px;">
+				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+			</div>
+			<div class="checkbox" style="text-align: right;">
+				<a href="reg.html" th:href="@{to/auth/to/register/page}">我要注册</a>
+			</div>
+			<button class="btn btn-lg btn-success btn-block" type="submit">登录</button>
+		</form>
+	</div>
+
+	<script src="jquery/jquery-2.1.1.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="layer/layer.js"></script>
+	
+	<script type="text/javascript">
+	
+		$(function(){
+			
+			
+			// 登录表单提交按钮，点击触发事件，防止登录信息为空
+			$("form [type=submit]").click(function(){
+				
+				// 声明boolean类型变量，为下面判断做准备
+				var flag=true;
+				
+				// 得到表单中input标签中的type=text的标签，进行遍历
+				$("form :input[type=text]").each(function(){
+					
+					// 得到该标签的值value，并进行排除前后空格
+					var value=$.trim(this.value);
+					//alert(value);
+					
+					// 判断值是否为空
+					if(value==null || value==""){
+						
+						flag=false;
+						
+						// 如果走这一步，就是退出each遍历，不能使用return
+						return false;
+					}
+				})
+				
+				// 判断flag
+				if(!flag){
+					
+					// 弹出提示信息
+					layer.msg("输入不能为空，请输入",{time:2000,icon:7,shift:6},function(){});
+					
+					// 因为表单没有填，所以弹出上面提示框的同时，防止表单提交
+					return false;
+				}
+				
+			});
+			
+			
+			
+			
+			
+			
+			
+		});
+	
+	</script>
+	
+	
+	
+</body>
+</html>

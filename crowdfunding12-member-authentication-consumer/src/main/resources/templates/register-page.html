@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keys" content="">
+    <meta name="author" content="">
+    
+    <base th:href="@{/}">
+    
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/login.css">
+	<style>
+
+	</style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <div><a class="navbar-brand" href="index.html" style="font-size:32px;">尚筹网-创意产品众筹平台</a></div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <form class="form-signin" role="form" method="post" action="to/auth/to/login/page" >
+        <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 用户注册</h2>
+        	<p th:text="${message}">这里执行注册异常消息的打印</p>
+          <div class="form-group has-success has-feedback">
+			<input type="text" name="userName" class="form-control" id="inputSuccess4" placeholder="请输入登录昵称" autofocus>
+			<span class="glyphicon glyphicon-user form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-success has-feedback">
+			<input type="text" name="loginAcct" class="form-control" id="inputSuccess4" placeholder="请输入登录账号" autofocus>
+			<span class="glyphicon glyphicon-user form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-success has-feedback">
+			<input type="text" name="userPswd" class="form-control" id="inputSuccess4" placeholder="请输入登录密码" style="margin-top:10px;">
+			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-success has-feedback">
+			<input type="text" name="email" class="form-control" id="inputSuccess4" placeholder="请输入邮箱地址" style="margin-top:10px;">
+			<span class="glyphicon glyphicon glyphicon-envelope form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-success has-feedback">
+			<input type="text" name="phoneNum"  class="form-control" id="inputSuccess4" placeholder="请输入手机号" style="margin-top:10px;">
+			<span class="glyphicon glyphicon glyphicon-earphone form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-success has-feedback">
+			<input type="text" name="verifyCode" class="form-control" id="inputSuccess4" placeholder="请输入验证码" style="margin-top:10px;">
+			<span class="glyphicon glyphicon glyphicon-comment form-control-feedback"></span>
+		  </div>
+		  <button type="button" id="getVerifyCodeBtn" class="btn btn-lg btn-success btn-block"> 获取验证码</button>
+         <button type="submit"  class="btn btn-lg btn-success btn-block" >注册</button>
+      </form>
+    </div>
+    <script src="jquery/jquery-2.1.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="layer/layer.js"></script>
+    
+    
+    <script type="text/javascript">
+    
+    	$(function(){
+    		
+    		
+			// 点击“获取验证码”的按钮，使用ajax异步跳转到controller进行短信认证
+    		$("#getVerifyCodeBtn").click(function(){
+    			
+    			// 得到注册用户输入的手机号
+    			var phoneNum=$.trim($("form [name=phoneNum]").val());
+    			
+    			// 判断手机号码是否为空
+    			if(phoneNum==null||phoneNum==""){
+    				
+    				layer.msg("请输入手机号码，手机号码不能为空",{time:2000,icon:7,shift:7},function(){});
+    				
+    				return;
+    			}
+    			
+    			// 将是手机号码发送到后台，进行短信验证
+    			$.ajax({
+    				"type" : "post",
+    				"url" : "to/auth/to/send/message.json",
+    				"datatype" : "json",
+    				"data" : {"phoneNum":phoneNum},
+    				"success" : function(response){
+    					
+    					if(response.operationResult=="SUCCESS"){
+    						
+    						layer.msg("短信发送成功",{time:2000,icon:6,shift:5},function(){});
+    						
+    					}
+    					
+    					if(response.operationResult=="FAILED"){
+    						
+    						layer.msg("短信发送失败  【 "+response.operationMessage+"】",{time:20000,icon:5,shift:6},function(){});
+    						
+    					}
+    					
+    					return;
+    				},
+    				"error" : function(response){
+    					
+    					layer.msg(response.status+"-----"+response.statusText);
+    					
+    					return;
+    				}
+    			});
+    			
+    			
+    		});
+    		
+    		
+			// 点击注册时的按钮时间，防止提交表单中的属性为空
+			
+			$("form [type=submit]").click(function(){
+				
+				// 得到form表单中子标签为input且属性type=text的标签
+				var inputs=$("form :input[type=text]");
+				
+				//alert(inputs.length);
+				
+				//console.log(inputs);
+				
+				// 声明一个boolean类型常量
+				var flag=true;
+				
+				// 遍历得到的input标签，判断是否输入为空
+				inputs.each(function(){
+					
+					//alert(this.value);
+					//var value=$.trim(this.value);
+					
+					// 得到标签中输入的值
+					var value=$.trim($(this).val());
+					
+					// 判断
+					if(value==null || value==""){
+						
+						// 只要遍历到一个标签中value的值为空，改变flag
+						flag=false;
+						
+						// 退出循环
+						return false;
+					}
+				});
+				
+				// 判断flag，为true跳转到控制器；false，不跳转，执行以下代码
+				if(!flag){
+					
+					// 弹出提示信息
+					layer.msg("输入不能为空，请输入",{time:2000,icon:7,shift:6},function(){});
+					
+					// 防止form表单提交
+					return false;
+				}
+				
+			});
+    		
+    		
+    		
+    		
+    		
+    		
+    	});
+    	
+    	
+    
+    
+    
+    
+    </script>
+    
+    
+    
+    
+  </body>
+</html>
